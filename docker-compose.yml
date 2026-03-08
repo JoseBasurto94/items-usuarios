@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: '3.9'
 
 services:
@@ -18,4 +19,26 @@ services:
       dockerfile: Dockerfile
     container_name: usuariosapi
     ports:
+=======
+version: '3.9'
+
+services:
+
+  # Microservicio ItemsTrabajo.Api
+  itemsapi:
+    build:
+      context: ./ItemsTrabajo.Api
+      dockerfile: Dockerfile
+    container_name: itemsapi
+    ports:
+      - "32770:80"
+
+  # Microservicio Usuarios.Api
+  usuariosapi:
+    build:
+      context: ./Usuarios.Api
+      dockerfile: Dockerfile
+    container_name: usuariosapi
+    ports:
+>>>>>>> 1affd2c (Agregar APIs y archivos del proyecto)
       - "32772:80"
