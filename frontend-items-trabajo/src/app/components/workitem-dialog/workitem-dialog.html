@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Nuevo WorkItem</h2>
+
+<mat-dialog-content>
+
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Título</mat-label>
+    <input matInput [(ngModel)]="item.titulo" (input)="item.titulo = item.titulo.toUpperCase()">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Fecha entrega</mat-label>
+    <input matInput type="date" [(ngModel)]="item.fechaEntrega">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Relevancia</mat-label>
+    <mat-select [(ngModel)]="item.relevancia">
+      <mat-option value="ALTA">ALTA</mat-option>
+      <mat-option value="MEDIA">MEDIA</mat-option>
+      <mat-option value="BAJA">BAJA</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button mat-button mat-dialog-close>
+    Cancelar
+  </button>
+
+  <button mat-raised-button color="primary" (click)="guardar()">
+    Guardar
+  </button>
+
+</mat-dialog-actions>

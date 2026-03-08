@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+}
+
+mat-card {
+  margin: 30px;
+  padding: 20px;
+}
+
+mat-card-title {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.estado-completo {
+  color: #4CAF50;
+}
+
+.estado-pendiente {
+  color: #ff9800;
+}

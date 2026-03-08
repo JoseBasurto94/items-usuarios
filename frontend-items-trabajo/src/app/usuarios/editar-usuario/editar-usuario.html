@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Editar Usuario</h2>
+
+<mat-dialog-content>
+
+  <mat-form-field appearance="fill" style="width:100%">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="usuario.usuaNombre" (ngModelChange)="usuario.usuaNombre = $event.toUpperCase()" style="text-transform: uppercase">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button mat-button (click)="cerrar()">Cancelar</button>
+
+  <button mat-raised-button color="primary" (click)="guardar()">
+    Guardar
+  </button>
+
+</mat-dialog-actions>

@@ -1,0 +1,56 @@
+<mat-card>
+
+  <mat-card-title>
+    Usuarios
+  </mat-card-title>
+
+  <div style="margin-bottom:20px; display:flex; gap:10px;">
+
+    <button mat-raised-button color="primary" (click)="nuevoUsuario()">
+      <mat-icon>person_add</mat-icon>
+      Nuevo Usuario
+    </button>
+
+    <button mat-raised-button color="accent" (click)="irWorkItems()">
+      <mat-icon>assignment</mat-icon>
+      Ver WorkItems
+    </button>
+
+  </div>
+
+  <table mat-table [dataSource]="usuarios" class="mat-elevation-z8">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let usuario"> {{usuario.usuaId}} </td>
+    </ng-container>
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let usuario"> {{usuario.usuaNombre}} </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let usuario">
+
+        <button mat-icon-button color="primary" (click)="editar(usuario)">
+            <mat-icon>edit</mat-icon>
+        </button>
+
+       <button mat-icon-button color="warn" (click)="eliminar(usuario.usuaId)">
+            <mat-icon>delete</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+</mat-card>

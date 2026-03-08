@@ -1,0 +1,118 @@
+<mat-card>
+
+  <mat-card-title>Lista de WorkItems</mat-card-title>
+
+  <div style="margin-bottom:20px; display:flex; gap:10px;">
+    
+    <button mat-raised-button color="primary" (click)="volverUsuarios()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver a Usuarios
+    </button>
+
+    <button mat-raised-button color="accent" (click)="nuevoItem()">
+      <mat-icon>add</mat-icon>
+      Nuevo WorkItem
+    </button>
+
+  </div>
+
+<table mat-table [dataSource]="items" class="mat-elevation-z8">
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let item">{{item.id}}</td>
+    </ng-container>
+
+    <!-- TITULO -->
+    <ng-container matColumnDef="titulo">
+      <th mat-header-cell *matHeaderCellDef>Título</th>
+      <td mat-cell *matCellDef="let item">{{item.titulo}}</td>
+    </ng-container>
+
+    <!-- FECHA -->
+    <ng-container matColumnDef="fechaEntrega">
+      <th mat-header-cell *matHeaderCellDef>Fecha Entrega</th>
+      <td mat-cell *matCellDef="let item">
+        {{item.fechaEntrega | date:'short'}}
+      </td>
+    </ng-container>
+
+    <!-- RELEVANCIA -->
+    <ng-container matColumnDef="relevancia">
+      <th mat-header-cell *matHeaderCellDef>Relevancia</th>
+      <td mat-cell *matCellDef="let item">{{item.relevancia}}</td>
+    </ng-container>
+
+    <!-- USUARIO -->
+    <ng-container matColumnDef="usuarioAsignado">
+      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+      <td mat-cell *matCellDef="let item">
+        <span *ngIf="item.usuarioAsignado; else noAsignado">
+          {{ item.usuarioAsignado }}
+        </span>
+
+        <ng-template #noAsignado>
+          <span style="color: gray; font-style: italic;">
+            No asignado
+          </span>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <!-- COMPLETADO -->
+    <ng-container matColumnDef="completado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let item">
+
+        <mat-icon
+          *ngIf="item.completado; else pendiente"
+          class="estado-completo"
+          matTooltip="Completado">
+          check_circle
+        </mat-icon>
+
+        <ng-template #pendiente>
+          <mat-icon
+            class="estado-pendiente"
+            matTooltip="Pendiente">
+            hourglass_empty
+          </mat-icon>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let item">
+
+        <button mat-icon-button color="warn" (click)="eliminarItem(item.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <!-- Botón Asignar -->
+        <button mat-icon-button 
+                color="primary" 
+                (click)="autoAsignar(item)"
+                [disabled]="item.usuarioAsignado || item.completado"
+                [matTooltip]="item.usuarioAsignado ? 'Usuario ya asignado' : 'Asignar usuario'">
+          <mat-icon>person_add</mat-icon>
+        </button>
+
+        <!-- Botón Finalizar -->
+        <button mat-icon-button 
+                color="accent"
+                (click)="finalizarItem(item.id)"
+                [disabled]="!item.usuarioAsignado || item.completado"
+                [matTooltip]="item.completado ? 'Ítem completado' : 'Finalizar WorkItem'">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+</mat-card>

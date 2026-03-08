@@ -1,0 +1,8 @@
+export interface WorkItem {
+  id: number;
+  titulo: string;
+  fechaEntrega: Date;
+  relevancia: string;
+  usuarioAsignado: string;
+  completado: boolean;
+}
