@@ -22,9 +22,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialog } from './components/confirm-dialog/confirm-dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { AsignarUsuario } from './components/asignar-usuario/asignar-usuario';
+import { AsignarUsuarioComponent } from './components/asignar-usuario/asignar-usuario';
 import { MatListModule } from '@angular/material/list';
 import { NuevoUsuario } from './components/nuevo-usuario/nuevo-usuario';
+import { DialogoSugerencia } from './components/dialogo-sugerencia/dialogo-sugerencia';
+import { ConfirmarAsignacion } from './components/confirmar-asignacion/confirmar-asignacion';
+import { DialogoSaturacion } from './components/dialogo-saturacion/dialogo-saturacion';
+import { DialogoNoOptimo } from './components/dialogo-no-optimo/dialogo-no-optimo';
+import { ConfirmarAsignacionAutomatica } from './components/confirmar-asignacion-automatica/confirmar-asignacion-automatica';
+import { DialogoResultadoAsignacion } from './components/dialogo-resultado-asignacion/dialogo-resultado-asignacion';
+import { ItemsPendientesUsuario } from './components/items-pendientes-usuario/items-pendientes-usuario';
+import { MatExpansionModule } from '@angular/material/expansion'; // <-- Agregar esta importación
 
 @NgModule({
   declarations: [
@@ -34,8 +42,15 @@ import { NuevoUsuario } from './components/nuevo-usuario/nuevo-usuario';
     ItemsTrabajo,
     WorkitemDialog,
     ConfirmDialog,
-    AsignarUsuario,
+    AsignarUsuarioComponent,
     NuevoUsuario,
+    DialogoSugerencia,
+    ConfirmarAsignacion,
+    DialogoSaturacion,
+    DialogoNoOptimo,
+    ConfirmarAsignacionAutomatica,
+    DialogoResultadoAsignacion,
+    ItemsPendientesUsuario
   ],
   imports: [
     BrowserModule,
@@ -51,7 +66,8 @@ import { NuevoUsuario } from './components/nuevo-usuario/nuevo-usuario';
     FormsModule,
     MatTooltipModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

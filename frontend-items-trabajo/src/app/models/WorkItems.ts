@@ -1,4 +1,4 @@
-export interface WorkItem {
+export interface WorkItems {
   id: number;
   titulo: string;
   fechaEntrega: Date;

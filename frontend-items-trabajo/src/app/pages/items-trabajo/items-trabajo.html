@@ -92,9 +92,18 @@
         <!-- Botón Asignar -->
         <button mat-icon-button 
                 color="primary" 
-                (click)="autoAsignar(item)"
+                (click)="abrirDialogoAsignacion(item)"
                 [disabled]="item.usuarioAsignado || item.completado"
                 [matTooltip]="item.usuarioAsignado ? 'Usuario ya asignado' : 'Asignar usuario'">
+          <mat-icon>person_add</mat-icon>
+        </button>
+
+        <!-- Botón Asignar automaticamente-->
+        <button mat-icon-button 
+                color="secondary" 
+                (click)="asignarAutomaticamente(item)"
+                [disabled]="item.usuarioAsignado || item.completado"
+                [matTooltip]="item.usuarioAsignado ? 'Usuario ya asignado' : 'Asignar automaticamente'">
           <mat-icon>person_add</mat-icon>
         </button>
 

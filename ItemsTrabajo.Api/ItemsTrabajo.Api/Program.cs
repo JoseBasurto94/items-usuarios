@@ -1,7 +1,9 @@
+using ItemsTrabajo.Api.Configurations;
 using ItemsTrabajo.Api.Interfaces;
 using ItemsTrabajo.Api.Models;
 using ItemsTrabajo.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,15 @@ builder.Services.AddDbContext<ItemsTrabajoContext>(options =>
         builder.Configuration.GetConnectionString("ItemsTrabajoConnection")
     )
 );
+
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiUrls"));
+
+builder.Services.AddHttpClient<UsuarioServiceClient>((serviceProvider, client) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<ApiSettings>>().Value;
+    client.BaseAddress = new Uri(settings.UsuariosApi);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
 builder.Services.AddCors(options =>
 {

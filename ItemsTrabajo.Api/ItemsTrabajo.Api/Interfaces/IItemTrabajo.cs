@@ -11,5 +11,8 @@ namespace ItemsTrabajo.Api.Interfaces
         Task<bool> CompletarItem(long id);
         Task<bool> AsignarItem(long id, string usuario);
         Task<bool> EliminarItem(long id);
+        Task<AsignacionAutomaticaDto> AsignarItemAutomaticamente(long id);
+        Task<List<UsuarioCargaDto>> ObtenerEstadoUsuarios();
+        Task<List<ItemsTrabajoBaseDto>> ObtenerItemsPendientesPorUsuario(string usuario);
     }
 }

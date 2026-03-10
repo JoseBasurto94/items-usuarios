@@ -1,0 +1,111 @@
+<!-- components/items-pendientes-usuario/items-pendientes-usuario.component.html -->
+<h2 mat-dialog-title>
+  <mat-icon color="primary" style="margin-right: 8px;">assignment_ind</mat-icon>
+  Items Pendientes - {{ data.usuario }}
+</h2>
+
+<mat-dialog-content>
+  <!-- Resumen de items -->
+  <div class="resumen-card" *ngIf="totalItems > 0">
+    <div class="resumen-item">
+      <span class="resumen-label">Total:</span>
+      <span class="resumen-valor">{{ totalItems }}</span>
+    </div>
+    <div class="resumen-item alta">
+      <span class="resumen-label">🔴 Alta:</span>
+      <span class="resumen-valor">{{ itemsAlta }}</span>
+    </div>
+    <div class="resumen-item media">
+      <span class="resumen-label">🟡 Media:</span>
+      <span class="resumen-valor">{{ itemsMedia }}</span>
+    </div>
+    <div class="resumen-item baja">
+      <span class="resumen-label">🟢 Baja:</span>
+      <span class="resumen-valor">{{ itemsBaja }}</span>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay items -->
+  <div class="sin-items" *ngIf="totalItems === 0">
+    <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">info</mat-icon>
+    <p>No hay items pendientes para este usuario</p>
+  </div>
+
+  <!-- Lista de items ordenados -->
+  <mat-accordion *ngIf="totalItems > 0" class="items-accordion">
+    <mat-expansion-panel *ngFor="let item of data.items; let i = index" 
+                         [expanded]="i === 0"
+                         [class.vencido]="item.diasParaEntrega < 0"
+                         [class.urgente]="item.diasParaEntrega >= 0 && item.diasParaEntrega <= 2">
+      
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon [color]="getUrgenciaColor(item)" style="margin-right: 8px;">
+            {{ getUrgenciaIcon(item) }}
+          </mat-icon>
+          <span class="item-titulo">{{ item.titulo }}</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          <span class="item-fecha">{{ item.fechaEntrega | date:'dd/MM/yyyy' }}</span>
+          <span class="item-urgencia" [class.vencido-text]="item.diasParaEntrega < 0">
+            {{ getUrgencia(item) }}
+          </span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="item-detalle">
+        <div class="detalle-grid">
+          <div class="detalle-item">
+            <mat-icon color="primary" style="margin-right: 4px;">info</mat-icon>
+            <span><strong>ID:</strong> {{ item.id }}</span>
+          </div>
+          
+          <div class="detalle-item">
+            <mat-icon [color]="item.relevancia === 'alta' ? 'warn' : 'primary'" style="margin-right: 4px;">
+              {{ getRelevanciaIcon(item) }}
+            </mat-icon>
+            <span><strong>Relevancia:</strong> 
+              <span [class.alta]="item.relevancia === 'alta'"
+                    [class.media]="item.relevancia === 'media'"
+                    [class.baja]="item.relevancia === 'baja'">
+                {{ item.relevancia | uppercase }}
+              </span>
+            </span>
+          </div>
+
+          <div class="detalle-item">
+            <mat-icon style="margin-right: 4px;">event</mat-icon>
+            <span><strong>Fecha entrega:</strong> {{ item.fechaEntrega | date:'fullDate' }}</span>
+          </div>
+
+          <div class="detalle-item">
+            <mat-icon [color]="item.diasParaEntrega < 0 ? 'warn' : 'primary'" style="margin-right: 4px;">
+              {{ item.diasParaEntrega < 0 ? 'error' : 'hourglass_empty' }}
+            </mat-icon>
+            <span><strong>Días restantes:</strong> 
+              <span [class.vencido-text]="item.diasParaEntrega < 0">
+                {{ item.diasParaEntrega < 0 ? 'VENCIDO' : item.diasParaEntrega + ' días' }}
+              </span>
+            </span>
+          </div>
+
+          <div class="detalle-item">
+            <mat-icon style="margin-right: 4px;">assignment</mat-icon>
+            <span><strong>Estado:</strong> {{ getUrgencia(item) }}</span>
+          </div>
+        </div>
+
+        <div class="prioridad-badge" [class]="item.relevancia?.toLowerCase()">
+          {{ item.relevancia | uppercase }} PRIORIDAD
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+    Cerrar
+  </button>
+</mat-dialog-actions>

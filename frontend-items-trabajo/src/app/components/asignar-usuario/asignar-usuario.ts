@@ -1,41 +1,47 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Usuario } from '../../models/usuario'; 
+
+export interface DialogData {
+  usuarios: Usuario[];
+  item: any;
+}
 
 @Component({
   selector: 'app-asignar-usuario',
   standalone: false,
   template: `
-    <h2 mat-dialog-title>Asignar Responsable</h2>
+    <h2 mat-dialog-title>Asignar Item</h2>
+    
     <mat-dialog-content>
-      <p>Seleccione un usuario para el WorkItem:</p>
-      <mat-list>
-        <mat-list-item *ngFor="let usuario of data.usuarios" (click)="seleccionarUsuario(usuario)">
-          {{ usuario.usuaNombre }}
-        </mat-list-item>
-      </mat-list>
+      <p><strong>Item:</strong> {{ data.item.titulo }}</p>
+      
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Seleccionar usuario</mat-label>
+        <mat-select #selectRef>
+          <mat-option *ngFor="let usuario of data.usuarios" [value]="usuario.usuaNombre">
+            {{ usuario.usuaNombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-dialog-content>
+
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Cancelar</button>
+      <button 
+        mat-raised-button 
+        color="primary"
+        [disabled]="!selectRef.value"
+        [mat-dialog-close]="selectRef.value">
+        Asignar
+      </button>
     </mat-dialog-actions>
   `,
-  styles: [`
-    mat-list-item {
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    mat-list-item:hover {
-      background-color: #e0e0e0;
-    }
-  `]
+  styles: ['.full-width { width: 100%; }']
 })
-export class AsignarUsuario {
-
-  constructor(
-    public dialogRef: MatDialogRef<AsignarUsuario>,
-    @Inject(MAT_DIALOG_DATA) public data: { usuarios: any[] }
+export class AsignarUsuarioComponent {
+ constructor(
+    public dialogRef: MatDialogRef<AsignarUsuarioComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-
-  seleccionarUsuario(usuario: any) {
-    this.dialogRef.close(usuario.usuaNombre);
-  }
 }

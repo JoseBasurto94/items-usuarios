@@ -1,13 +1,10 @@
-﻿namespace Usuarios.Api.Dtos
+﻿namespace ItemsTrabajo.Api.Dtos
 {
-    public class UsuariosDto
-    {
-        public string? usuaNombre { get; set; }
-    }
 
-    public class UsuariosBaseDto : UsuariosDto
+    public class UsuarioDto
     {
         public long usuaId { get; set; }
+        public string usuaNombre { get; set; } = string.Empty;
     }
 
     public class UsuarioCargaDto

@@ -7,6 +7,8 @@ import { EditarUsuario } from '../../usuarios/editar-usuario/editar-usuario';
 import { Router } from '@angular/router';
 import { NuevoUsuario } from '../../components/nuevo-usuario/nuevo-usuario';
 import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
+import { WorkitemServive } from '../../services/workitem';
+import { ItemsPendientesUsuario } from '../../components/items-pendientes-usuario/items-pendientes-usuario';
 
 @Component({
   selector: 'app-usuarios',
@@ -21,6 +23,7 @@ export class Usuarios implements OnInit{
   displayedColumns: string[] = ['id', 'nombre', 'acciones'];
 
   constructor(private usuarioService: UsuarioService, 
+    private workItemService: WorkitemServive,
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
   private router: Router) { }
@@ -89,6 +92,25 @@ nuevoUsuario() {
         .subscribe(() => {
           this.cargarUsuarios();
         });
+    }
+  });
+}
+
+verItemsPendientes(usuario: Usuario) {
+  this.workItemService.obtenerItemsPendientesPorUsuario(usuario.usuaNombre).subscribe({
+    next: (items) => {
+      this.dialog.open(ItemsPendientesUsuario, {
+        width: '800px',
+        maxWidth: '95vw',
+        data: {
+          usuario: usuario.usuaNombre,
+          items: items
+        }
+      });
+    },
+    error: (error) => {
+      // console.error('Error:', error);
+      // this.snackBar.open('Error al cargar items pendientes', 'Cerrar', { duration: 3000 });
     }
   });
 }
